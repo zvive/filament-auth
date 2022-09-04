@@ -1,106 +1,81 @@
 <?php
 
-namespace Phpsa\FilamentAuthentication\Resources;
+declare(strict_types=1);
 
-use Phpsa\FilamentAuthentication\Resources\PermissionResource\Pages\CreatePermission;
-use Phpsa\FilamentAuthentication\Resources\PermissionResource\Pages\EditPermission;
-use Phpsa\FilamentAuthentication\Resources\PermissionResource\Pages\ListPermissions;
-use Phpsa\FilamentAuthentication\Resources\PermissionResource\Pages\ViewPermission;
-use Phpsa\FilamentAuthentication\Resources\PermissionResource\RelationManager\RoleRelationManager;
-use Filament\Forms\Components\BelongsToManyMultiSelect;
+namespace FilamentAuth\Resources;
+
+use FilamentAuth\Resources\PermissionResource\Pages\CreatePermission;
+use FilamentAuth\Resources\PermissionResource\Pages\EditPermission;
+use FilamentAuth\Resources\PermissionResource\Pages\ListPermissions;
+use FilamentAuth\Resources\PermissionResource\Pages\ViewPermission;
+use FilamentAuth\Resources\PermissionResource\RelationManager\RoleRelationManager;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
-use Filament\Tables\Actions\BulkAction;
-use Filament\Tables\Columns\TextColumn;
-use Illuminate\Database\Eloquent\Collection;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
+use FilamentAuth\Resources\Concerns\HasPermissionInputs;
+use FilamentAuth\Resources\Concerns\HasPermissionColumns;
 
 class PermissionResource extends Resource
 {
-    protected static ?string $model = Permission::class;
-
+    use HasPermissionInputs;
+    use HasPermissionColumns;
+    protected static ?string $model          = null;
     protected static ?string $navigationIcon = 'heroicon-o-lock-closed';
 
     public function __construct()
     {
-        static::$model = config('filament-authentication.models.Permission');
+        static::$model = static::filamentAuth()->getPermissionClass();
     }
 
-    public static function getLabel(): string
+    public static function getLabel() : string
     {
-        return strval(__('filament-authentication::filament-authentication.section.permission'));
+        return (string) (\__('filament-auth::filament-auth.section.permission'));
     }
 
-    protected static function getNavigationGroup(): ?string
+    protected static function getNavigationGroup() : ?string
     {
-        return strval(__('filament-authentication::filament-authentication.section.group'));
+        return (string) (\__('filament-auth::filament-auth.section.group'));
     }
 
-    public static function getPluralLabel(): string
+    public static function getPluralLabel() : string
     {
-        return strval(__('filament-authentication::filament-authentication.section.permissions'));
+        return (string) (\__('filament-auth::filament-auth.section.permissions'));
     }
 
-    public static function form(Form $form): Form
+    public static function form(Form $form) : Form
     {
         return $form
             ->schema([
                 Card::make()
                     ->schema([
-                        Grid::make(2)->schema([
-                            TextInput::make('name')
-                                ->label(strval(__('filament-authentication::filament-authentication.field.name'))),
-                            TextInput::make('guard_name')
-                                ->label(strval(__('filament-authentication::filament-authentication.field.guard_name')))
-                                 ->default(config('auth.defaults.guard')),
-                            // BelongsToManyMultiSelect::make('roles')
-                            //     ->label(strval(__('filament-authentication::filament-authentication.field.roles')))
-                            //     ->relationship('roles', 'name')
-                            //     ->preload(config('filament-spatie-roles-permissions.preload_roles'))
-                        ])
-                    ])
+                        Grid::make(2)->schema(
+                            static::getInputs(),
+                        ),
+                    ]),
             ]);
     }
 
-    public static function table(Table $table): Table
+    public static function table(Table $table) : Table
     {
-        return $table
-            ->columns([
-                TextColumn::make('id')
-                    ->label('ID')
-                    ->searchable(),
-                TextColumn::make('name')
-                    ->label(strval(__('filament-authentication::filament-authentication.field.name')))
-                    ->searchable(),
-                TextColumn::make('guard_name')
-                    ->label(strval(__('filament-authentication::filament-authentication.field.guard_name')))
-                    ->searchable(),
-            ])
-            ->filters([
-                //
-            ]);
+        return $table->columns(static::getColumns());
     }
 
-    public static function getRelations(): array
+    public static function getRelations() : array
     {
         return [
-            RoleRelationManager::class
+            RoleRelationManager::class,
         ];
     }
 
-    public static function getPages(): array
+    public static function getPages() : array
     {
         return [
             'index'  => ListPermissions::route('/'),
             'create' => CreatePermission::route('/create'),
             'edit'   => EditPermission::route('/{record}/edit'),
-            'view'   => ViewPermission::route('/{record}')
+            'view'   => ViewPermission::route('/{record}'),
         ];
     }
 }

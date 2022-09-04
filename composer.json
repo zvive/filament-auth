@@ -1,6 +1,6 @@
 {
-  "name": "phpsa/filament-authentication",
-  "description": "User & Role (via Spatie Roles/Permissions) Manager Resource For Filament Admin",
+  "name": "zvive/filament-auth",
+  "description": "User & Role (via Spatie Roles/Permissions) Manager Resource For Filament Admin, forked from forked from phpsa/filament-authentication - added Bouncer as an option for permissions as well.",
   "keywords": [
     "laravel",
     "user",
@@ -9,17 +9,20 @@
     "ui",
     "filament"
   ],
-  "homepage": "https://cgs4k.nz",
+  "homepage": "https://zvive.com",
   "license": "MIT",
   "autoload": {
+    "files": [
+        "src/helpers.php"
+    ],
     "psr-4": {
-      "Phpsa\\FilamentAuthentication\\": "src/"
+      "FilamentAuth\\": "src/"
     }
   },
   "authors": [
     {
-      "name": "Craig G Smith",
-      "email": "vxdhost@gmail.com"
+      "name": "Patrick Curl",
+      "email": "patrickwcurl@gmail.com"
     }
   ],
   "minimum-stability": "dev",
@@ -28,7 +31,7 @@
     "filament/filament": "^2.12.18",
     "lab404/laravel-impersonate": "^1.7",
     "spatie/laravel-package-tools": "^1.10",
-    "spatie/laravel-permission": "^5.4"
+    "laravel/framework": "^9.0"
   },
   "config": {
     "sort-packages": true
@@ -36,9 +39,12 @@
   "extra": {
     "laravel": {
       "providers": [
-        "Phpsa\\FilamentAuthentication\\FilamentAuthenticationProvider"
+        "FilamentAuth\\FilamentAuthProvider"
       ]
     }
   },
-  "prefer-stable": true
+  "prefer-stable": true,
+  "require-dev": {
+    "zvive/fixer": "^9.0"
+  }
 }

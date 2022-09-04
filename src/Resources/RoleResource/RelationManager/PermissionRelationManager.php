@@ -1,43 +1,37 @@
 <?php
 
-namespace Phpsa\FilamentAuthentication\Resources\RoleResource\RelationManager;
+declare(strict_types=1);
 
-use Filament\Forms\Components\TextInput;
+namespace FilamentAuth\Resources\RoleResource\RelationManager;
+
 use Filament\Resources\Form;
-use Filament\Resources\RelationManagers\BelongsToManyRelationManager;
+use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Table;
-use Filament\Tables\Columns\TextColumn;
+use FilamentAuth\Resources\Concerns\HasPermissionInputs;
+use FilamentAuth\Resources\Concerns\HasPermissionColumns;
 
-class PermissionRelationManager extends BelongsToManyRelationManager
+class PermissionRelationManager extends RelationManager
 {
-    protected static string $relationship = 'permissions';
-
+    use HasPermissionInputs;
+    use HasPermissionColumns;
+    protected static string $relationship          = 'permissions';
     protected static ?string $recordTitleAttribute = 'name';
 
-    public static function form(Form $form): Form
+    public function __construct()
     {
-        return $form
-            ->schema([
-                TextInput::make('name')
-                    ->label(strval(__('filament-authentication::filament-authentication.field.name'))),
-                TextInput::make('guard_name')
-                    ->label(strval(__('filament-authentication::filament-authentication.field.guard_name')))
-                     ->default(config('auth.defaults.guard')),
-
-            ]);
+        static::$relationship = static::authPackage() === 'laravel-permissions' ? 'permissions' : 'abilities';
     }
 
-    public static function table(Table $table): Table
+    public static function form(Form $form) : Form
+    {
+        return $form
+            ->schema(static::getInputs());
+    }
+
+    public static function table(Table $table) : Table
     {
         return $table
-            ->columns([
-                TextColumn::make('name')
-                    ->label(strval(__('filament-authentication::filament-authentication.field.name')))
-                    ->searchable(),
-                TextColumn::make('guard_name')
-                    ->label(strval(__('filament-authentication::filament-authentication.field.guard_name'))),
-
-            ])
+            ->columns(static::getColumns())
             ->filters([
                 //
             ]);

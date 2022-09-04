@@ -1,1 +1,1 @@
-<x-filament-authentication::banner :fixed="true" />
+<x-filament-auth::banner :fixed="true" />

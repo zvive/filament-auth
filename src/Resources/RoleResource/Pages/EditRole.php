@@ -1,25 +1,18 @@
 <?php
 
-namespace Phpsa\FilamentAuthentication\Resources\RoleResource\Pages;
+declare(strict_types=1);
 
-use Spatie\Permission\Contracts\Role;
+namespace FilamentAuth\Resources\RoleResource\Pages;
+
 use Illuminate\Support\Facades\Config;
 use Filament\Resources\Pages\EditRecord;
-use Spatie\Permission\PermissionRegistrar;
 
 class EditRole extends EditRecord
 {
-    public static function getResource(): string
-    {
-        return Config::get('filament-authentication.resources.RoleResource');
-    }
+    use Concerns\UpdatesRole;
 
-    public function afterSave(): void
+    public static function getResource() : string
     {
-        if (! $this->record instanceof Role) {
-            return;
-        }
-
-        app(PermissionRegistrar::class)->forgetCachedPermissions();
+        return Config::get('filament-auth.resources.RoleResource');
     }
 }
