@@ -1,0 +1,32 @@
+{
+  "name": "filament-authentication",
+  "version": "0.0.1",
+  "description": "[![Latest Version on Packagist](https://img.shields.io/packagist/v/zvive/filament-auth.svg?style=flat-square)](https://packagist.org/packages/zvive/filament-auth) [![Semantic Release](https://github.com/zvive/filament-auth/actions/workflows/release.yml/badge.svg)](https://github.com/zvive/filament-auth/actions/workflows/release.yml) [![Total Downloads](https://img.shields.io/packagist/dt/zvive/filament-auth.svg?style=flat-square)](https://packagist.org/packages/zvive/filament-auth)",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zvive/filament-auth.git"
+  },
+  "keywords": [],
+  "author": "Patrick Curl <patrickwcurl@gmail.com> (https://github.com/patrickcurl)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zvive/filament-auth/issues"
+  },
+  "homepage": "https://github.com/zvive/filament-auth#readme",
+  "dependencies": {
+    "semantic-release": "^19.0.5"
+  },
+  "devDependencies": {
+    "@semantic-release/commit-analyzer": "^9.0.2",
+    "@semantic-release/github": "^8.0.6",
+    "@semantic-release/npm": "^9.0.1",
+    "@semantic-release/release-notes-generator": "^10.0.3"
+  }
+}
