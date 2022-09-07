@@ -21,12 +21,18 @@ class RoleResource extends Resource
 {
     use HasRoleColumns;
     use HasRoleInputs;
-    protected static ?string $model;
+
+    // protected static ?string $model          = \Silber\Bouncer\Database\Role::class;
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
-    public function __construct()
+    // public function __construct()
+    // {
+    //     static::$model = static::filamentAuth()->getRoleClass();
+    // }
+
+    public static function getModel() : string
     {
-        static::$model = static::filamentAuth()->getRoleClass();
+        return static::filamentAuth()->getRoleClass();
     }
 
     public static function getLabel() : string

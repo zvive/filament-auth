@@ -56,13 +56,13 @@ class ImpersonateLink
             'password_hash_'.\config('filament.auth.guard'),
         ]));
 
-        return \redirect(\config('filament-auth.impersonate.redirect', '/'));
+        return \redirect(\config('filament-auth.impersonate.redirect', 'filament.pages.dashboard'));
     }
 
     public static function leave() : bool|Redirector|RedirectResponse
     {
         if (!\app(ImpersonateManager::class)->isImpersonating()) {
-            return \redirect('/');
+            return \redirect(\config('filament-auth.impersonate.redirect', 'filament.pages.dashboard'));
         }
 
         \app(ImpersonateManager::class)->leave();

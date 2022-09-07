@@ -1,31 +1,35 @@
 <?php
 
-namespace Phpsa\FilamentAuthentication\Traits;
+declare(strict_types=1);
+
+namespace FilamentAuth\Traits;
 
 use Filament\Facades\Filament;
 use Illuminate\Support\Facades\Gate;
 
 trait SettingsPagePolicyTrait
 {
-    public function mount(): void
+    protected static bool $shouldRegisterNavigation;
+
+    public function mount() : void
     {
-        abort_unless(static::canView(), 403);
+        \abort_unless(static::canView(), 403);
 
         parent::mount();
     }
 
-    protected static function canView(): bool
+    protected static function canView() : bool
     {
-        if (static::getPolicy() == null) {
+        if (static::getPolicy() === null) {
             return false;
         }
 
         return static::getPolicy()->viewAny(Filament::auth()->user());
     }
 
-    protected static function shouldRegisterNavigation(): bool
+    protected static function shouldRegisterNavigation() : bool
     {
-        return static::canView() && static::$shouldRegisterNavigation;
+        return static::canView() && !empty(static::$shouldRegisterNavigation);
     }
 
     protected static function getPolicy()

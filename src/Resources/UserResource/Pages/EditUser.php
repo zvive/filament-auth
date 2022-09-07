@@ -7,7 +7,7 @@ namespace FilamentAuth\Resources\UserResource\Pages;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Config;
 use Filament\Resources\Pages\EditRecord;
-use Phpsa\FilamentAuthentication\Events\UserUpdated;
+use FilamentAuth\Events\UserUpdated;
 
 class EditUser extends EditRecord
 {

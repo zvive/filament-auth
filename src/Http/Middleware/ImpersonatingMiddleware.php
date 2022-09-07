@@ -17,9 +17,10 @@ class ImpersonatingMiddleware
     public function handle(Request $request, Closure $next)
     {
         $response = $next($request);
-
         // Only touch illuminate responses (avoid binary, etc)
         if (!$response instanceof Response || !\app(ImpersonateManager::class)->isImpersonating()) {
+            // if (!$response instanceof Response) {
+
             return $response;
         }
 

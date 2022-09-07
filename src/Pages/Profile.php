@@ -13,6 +13,7 @@ use Filament\Forms\Components\TextInput;
 use Illuminate\Validation\Rules\Password;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Auth\Authenticatable;
 
 /**
  * @TODO - fix translations
@@ -39,7 +40,12 @@ class Profile extends Page
         return 'formData';
     }
 
-    protected function getFormModel() : Model
+    protected function getFormModel() : Model | string | null
+    {
+        return Filament::auth()->user();
+    }
+
+    protected function getFilamentUser() : Model|null
     {
         return Filament::auth()->user();
     }
@@ -63,12 +69,13 @@ class Profile extends Page
             'email'    => $data['email'],
             'password' => $data['new_password'] ? Hash::make($data['new_password']) : null,
         ]);
-
-        $this->getFormModel()->update($state);
+        /** @var Authenticatable|Model $user */
+        $user = $this->getFormModel();
+        $user->update($state);
 
         if ($data['new_password']) {
             // @phpstan-ignore-next-line
-            Filament::auth()->login($this->getFormModel(), (bool) $this->getFormModel()->getRememberToken());
+            Filament::auth()->login($user, (bool) $user->getRememberToken());
         }
 
         $this->notify('success', (string) (\__('filament::resources/pages/edit-record.messages.saved')));

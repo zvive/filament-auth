@@ -21,12 +21,11 @@ class PermissionResource extends Resource
 {
     use HasPermissionInputs;
     use HasPermissionColumns;
-    protected static ?string $model          = null;
     protected static ?string $navigationIcon = 'heroicon-o-lock-closed';
 
-    public function __construct()
+    public static function getModel() : string
     {
-        static::$model = static::filamentAuth()->getPermissionClass();
+        return static::filamentAuth()->getPermissionClass();
     }
 
     public static function getLabel() : string

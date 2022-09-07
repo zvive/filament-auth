@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Phpsa\FilamentAuthentication\Widgets;
+namespace FilamentAuth\Widgets;
 
 use Filament\Widgets\TableWidget;
 use Illuminate\Support\Facades\Config;

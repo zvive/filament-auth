@@ -37,7 +37,11 @@ artisan vendor:publish --tag=filament-auth-translations
 
 ### Spatie Roles & Permissions
 
-If you have not yet configured this package it is automatically added by this installer, run the following steps:
+If you have not yet installed this package it run the following steps:
+
+```bash
+    composer require spatie/laravel-permission
+```
 
 1. You should publish the migration and the config/permission.php config file with:
 
@@ -47,12 +51,40 @@ php artisan migrate
 ```
 
 2. Add the `Spatie\Permission\Traits\HasRoles` trait to your Users model
+Also add the following method to your User Model:
+
+```php
+    public function canAccessFilament() : bool
+    {
+        // Change this per your requirements.
+        return $this->hasRole('superadmin');
+    }
+```
 
 3. Add Roles & Permissions as required
 
 For more see: <https://spatie.be/docs/laravel-permission/v5/introduction>
 
 ### Bouncer Roles / Permissions
+
+If you have not yet installed this package it run the following steps:
+
+1. You should publish the migration and the config/permission.php config file with:
+
+```php
+php artisan vendor:publish --provider="Silber\Bouncer\BouncerServiceProvider"
+php artisan migrate
+```
+
+Add the following method to your User model :
+
+```php
+    public function canAccessFilament() : bool
+    {
+        // Change this per your requirements.
+        return Bouncer::is($this)->a('superadmin');
+    }
+```
 
 Implemented, but docs coming soon.
 
@@ -139,7 +171,8 @@ Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed re
 
 ## Credits
 
-- [Phpsa](https://github.com/phpsa)
+- [Phpsa](https://github.com/phpsa/filament-authentication) Forked from this, added Bouncer.
+- [Patrick Curl](https://github.com/patrickcurl) / [Zvive](https://github.com/zvive) Maintainer of this package.
 
 ## License
 

@@ -1,6 +1,8 @@
 <?php
 
-namespace Phpsa\FilamentAuthentication\Events;
+declare(strict_types=1);
+
+namespace FilamentAuth\Events;
 
 use Illuminate\Queue\SerializesModels;
 

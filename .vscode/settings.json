@@ -1,0 +1,20 @@
+{
+  "diffEditor.codeLens": true,
+    "json.schemas": [
+        {
+            "name": "vscode-expo-manifest",
+            "fileMatch": [
+                "app.json",
+                "app.config.json"
+            ],
+            "url": "file:///home/patrick/.config/Code/User/globalStorage/bycedric.vscode-expo/manifest-45.0.0.json"
+        },
+        {
+            "name": "composer-json",
+            "fileMatch": [
+                "composer.json"
+            ],
+            "url": "https://getcomposer.org/schema.json"
+        },
+    ],
+}

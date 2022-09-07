@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Phpsa\FilamentAuthentication\Resources;
+namespace FilamentAuth\Resources;
 
 use App\Models\User;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Card;
+use Filament\Forms\Components\MultiSelect;
 use Illuminate\Support\Facades\Hash;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TagsColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\BelongsToManyMultiSelect;
 use Filament\Tables\Filters\TernaryFilter;
 use FilamentAuth\Actions\ImpersonateLink;
 use FilamentAuth\Resources\UserResource\Pages\EditUser;
@@ -25,13 +25,18 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class UserResource extends Resource
 {
-    protected static ?string $model                = User::class;
+    // protected static ?string $model                = User::class;
     protected static ?string $navigationIcon       = 'heroicon-o-user';
     protected static ?string $recordTitleAttribute = 'name';
 
     public function __construct()
     {
-        static::$model = \config('filament-auth.models.User');
+        // static::$model = \config('filament-auth.models.User');
+    }
+
+    public static function getModel() : string
+    {
+        return \config('filament-auth.models.User');
     }
 
     protected static function getNavigationGroup() : ?string
@@ -75,7 +80,7 @@ class UserResource extends Resource
                             ->dehydrated(false)
                             ->maxLength(255)
                             ->label((string) (\__('filament-auth::filament-auth.field.user.confirm_password'))),
-                        BelongsToManyMultiSelect::make('roles')
+                        MultiSelect::make('roles')
                             ->relationship('roles', 'name')
                             ->preload(\config('filament-auth.preload_roles'))
                             ->label((string) (\__('filament-auth::filament-auth.field.user.roles'))),

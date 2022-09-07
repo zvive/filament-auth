@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace FilamentAuth\Resources\UserResource\Pages;
 
 use Filament\Facades\Filament;
-use Filament\Pages\Actions\Action;
+use Filament\Pages\Actions\ButtonAction;
 use Illuminate\Support\Facades\Config;
 use Filament\Resources\Pages\ViewRecord;
 use Illuminate\Validation\UnauthorizedException;
@@ -27,7 +27,7 @@ class ViewUser extends ViewRecord
 
         if (ImpersonateLink::allowed($user, $this->record)) {
             return \array_merge([
-                Action::make('impersonate')
+                ButtonAction::make('impersonate')
                     ->action(function () {
                         ImpersonateLink::impersonate($this->record);
                     }),
