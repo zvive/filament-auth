@@ -18,13 +18,15 @@ if (!function_exists('fa_get_bouncer_model')) {
 }
 
 if (!function_exists('fa_get_spatie_permission_model')) {
-    function fa_get_spatie_permission_model($model)
+    function fa_get_spatie_permission_model($model) : string
     {
         if (!in_array($model, ['role', 'permission'], true)) {
             throw new \Exception('Model type must be role or permission');
         }
-
-        return config("permission.models.{$model}");
+        $modelClass = $model === 'role'
+            ? \Spatie\Permission\Models\Role::class
+            : \Spatie\Permission\Models\Permission::class;
+        return config("permission.models.{$model}", $modelClass);
     }
 }
 
