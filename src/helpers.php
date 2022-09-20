@@ -11,9 +11,10 @@ if (!function_exists('fa_get_bouncer_model')) {
         $modelClass = $model === 'role'
             ? \Silber\Bouncer\Database\Role::class
             : \Silber\Bouncer\Database\Ability::class;
-        if (class_exists("\Silber\Bouncer\Database\Models")) {
-            return app('Silber\Bouncer\Database\Models')::classname($modelClass);
+            if (class_exists("\Silber\Bouncer\Database\Models")) {
+            return call_user_func('Silber\Bouncer\Database\Models::classname', $modelClass);
         }
+        return '';
     }
 }
 
@@ -26,7 +27,7 @@ if (!function_exists('fa_get_spatie_permission_model')) {
         $modelClass = $model === 'role'
             ? \Spatie\Permission\Models\Role::class
             : \Spatie\Permission\Models\Permission::class;
-        return config("permission.models.{$model}", $modelClass);
+        return config("permission.models.{$model}", $modelClass) ?? '';
     }
 }
 
