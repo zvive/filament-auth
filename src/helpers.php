@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 if (!function_exists('fa_get_bouncer_model')) {
-    function fa_get_bouncer_model($model): string
+    function fa_get_bouncer_model($model):?string
     {
         if (!in_array($model, ['role', 'ability'], true)) {
             throw new \Exception('Model type must be role or ability');
@@ -18,7 +18,7 @@ if (!function_exists('fa_get_bouncer_model')) {
 }
 
 if (!function_exists('fa_get_spatie_permission_model')) {
-    function fa_get_spatie_permission_model($model)
+    function fa_get_spatie_permission_model($model): ?string
     {
         if (!in_array($model, ['role', 'permission'], true)) {
             throw new \Exception('Model type must be role or permission');
