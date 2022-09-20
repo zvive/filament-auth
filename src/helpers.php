@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 if (!function_exists('fa_get_bouncer_model')) {
-    function fa_get_bouncer_model($model)
+    function fa_get_bouncer_model($model): string
     {
         if (!in_array($model, ['role', 'ability'], true)) {
             throw new \Exception('Model type must be role or ability');
@@ -29,7 +29,7 @@ if (!function_exists('fa_get_spatie_permission_model')) {
 }
 
 if (!function_exists('fa_get_auth_model')) {
-    function fa_get_auth_model($modelType)
+    function fa_get_auth_model($modelType):string
     {
         $package_name = config('filament-auth.permission_package');
         if (!in_array($package_name, ['laravel-permission', 'bouncer'], true)) {
@@ -43,7 +43,8 @@ if (!function_exists('fa_get_auth_model')) {
         if ($package_name === 'laravel-permission') {
             $model = fa_get_spatie_permission_model($modelType);
         }
-        if (!class_exists($model)) {
+
+        if (!is_string($model) || !class_exists($model)) {
             $package_command = $package_name === 'bouncer' ? 'composer require silber/bouncer' : 'composer require spatie/laravel-permission';
             throw new \Exception("It appears the permission package is not installed. Please run: {$package_command} and try again.");
         }
