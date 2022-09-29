@@ -1,15 +1,13 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace FilamentAuth\Resources\PermissionResource\Pages;
 
+use FilamentAuth\FilamentAuth;
 use Filament\Forms\Components\Select;
 use Illuminate\Support\Facades\Config;
 use Filament\Tables\Actions\BulkAction;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Database\Eloquent\Collection;
-use FilamentAuth\FilamentAuth;
 
 class ListPermissions extends ListRecords
 {
@@ -20,8 +18,8 @@ class ListPermissions extends ListRecords
 
     protected function getTableBulkActions() : array
     {
-        $auth      = \app(FilamentAuth::class);
-        $roleClass = $auth->getRoleModel();
+        $auth      = app(FilamentAuth::class);
+        $roleClass = $auth->getRoleClass();
 
         return [
             BulkAction::make('Attach Role')
@@ -40,7 +38,7 @@ class ListPermissions extends ListRecords
                 })
                 ->form([
                     Select::make('role')
-                        ->label((string) (\__('filament-auth::filament-auth.field.role')))
+                        ->label((string) (__('filament-auth::filament-auth.field.role')))
                         ->options((new $roleClass())::query()->pluck('name', 'id'))
                         ->required(),
                 ])->deselectRecordsAfterCompletion(),

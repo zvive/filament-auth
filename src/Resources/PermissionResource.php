@@ -4,24 +4,31 @@ declare(strict_types=1);
 
 namespace FilamentAuth\Resources;
 
-use FilamentAuth\Resources\PermissionResource\Pages\CreatePermission;
-use FilamentAuth\Resources\PermissionResource\Pages\EditPermission;
-use FilamentAuth\Resources\PermissionResource\Pages\ListPermissions;
-use FilamentAuth\Resources\PermissionResource\Pages\ViewPermission;
-use FilamentAuth\Resources\PermissionResource\RelationManager\RoleRelationManager;
+use Filament\Resources\Form;
+use Filament\Resources\Table;
+use Filament\Resources\Resource;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Grid;
-use Filament\Resources\Form;
-use Filament\Resources\Resource;
-use Filament\Resources\Table;
 use FilamentAuth\Resources\Concerns\HasPermissionInputs;
 use FilamentAuth\Resources\Concerns\HasPermissionColumns;
+use FilamentAuth\Resources\PermissionResource\Pages\EditPermission;
+use FilamentAuth\Resources\PermissionResource\Pages\ViewPermission;
+use FilamentAuth\Resources\PermissionResource\Pages\ListPermissions;
+use FilamentAuth\Resources\PermissionResource\Pages\CreatePermission;
+use FilamentAuth\Resources\PermissionResource\RelationManager\RoleRelationManager;
 
 class PermissionResource extends Resource
 {
     use HasPermissionInputs;
     use HasPermissionColumns;
     protected static ?string $navigationIcon = 'heroicon-o-lock-closed';
+
+    public static function getSlug() : string
+    {
+        static::$slug = 'permissions';
+
+        return parent::getSlug();
+    }
 
     public static function getModel() : string
     {
@@ -30,17 +37,17 @@ class PermissionResource extends Resource
 
     public static function getLabel() : string
     {
-        return (string) (\__('filament-auth::filament-auth.section.permission'));
+        return (string) (__('filament-auth::filament-auth.section.permission'));
     }
 
     protected static function getNavigationGroup() : ?string
     {
-        return (string) (\__('filament-auth::filament-auth.section.group'));
+        return (string) (__('filament-auth::filament-auth.section.group'));
     }
 
     public static function getPluralLabel() : string
     {
-        return (string) (\__('filament-auth::filament-auth.section.permissions'));
+        return (string) (__('filament-auth::filament-auth.section.permissions'));
     }
 
     public static function form(Form $form) : Form

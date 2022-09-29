@@ -12,19 +12,19 @@ return [
         | Fields
         |--------------------------------------------------------------------------
     */
-    'field.id'                      => 'ID',
-    'field.user.name'               => 'Name',
-    'field.user.email'              => 'Email',
-    'field.user.roles'              => 'Roles',
-    'field.user.verified_at'        => 'Verified',
-    'field.user.created_at'         => 'Joined',
-    'field.user.password'           => 'Password',
-    'field.user.confirm_password'   => 'Confirm Password',
-
-    'field.guard_name'              => 'Guard Name',
-    'field.name'                    => 'Name',
-    'field.permissions'             => 'Permissions',
-    'field.roles'                   => 'Roles',
+    'field.id'                    => 'ID',
+    'field.user.name'             => 'Name',
+    'field.user.email'            => 'Email',
+    'field.user.roles'            => 'Roles',
+    'field.user.verified_at'      => 'Verified',
+    'field.user.created_at'       => 'Joined',
+    'field.user.password'         => 'Password',
+    'field.user.confirm_password' => 'Confirm Password',
+    'field.guard_name'            => 'Guard Name',
+    'field.name'                  => 'Name',
+    'field.permissions'           => 'Permissions',
+    'field.roles'                 => 'Roles',
+    'field.title'                 => 'Title',
 
     /*
         |--------------------------------------------------------------------------

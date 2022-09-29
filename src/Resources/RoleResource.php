@@ -4,31 +4,28 @@ declare(strict_types=1);
 
 namespace FilamentAuth\Resources;
 
-use FilamentAuth\Resources\RoleResource\Pages\CreateRole;
-use FilamentAuth\Resources\RoleResource\Pages\EditRole;
-use FilamentAuth\Resources\RoleResource\Pages\ListRoles;
-use FilamentAuth\Resources\RoleResource\Pages\ViewRole;
-use FilamentAuth\Resources\RoleResource\RelationManager\PermissionRelationManager;
+use Filament\Resources\Form;
+use Filament\Resources\Table;
+use Filament\Resources\Resource;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Grid;
-use Filament\Resources\Form;
-use Filament\Resources\Resource;
-use Filament\Resources\Table;
-use FilamentAuth\Resources\Concerns\HasRoleColumns;
 use FilamentAuth\Resources\Concerns\HasRoleInputs;
+use FilamentAuth\Resources\Concerns\HasRoleColumns;
+use FilamentAuth\Resources\RoleResource\Pages\EditRole;
+use FilamentAuth\Resources\RoleResource\Pages\ViewRole;
+use FilamentAuth\Resources\RoleResource\Pages\ListRoles;
+use FilamentAuth\Resources\RoleResource\Pages\CreateRole;
+use FilamentAuth\Resources\RoleResource\RelationManager\PermissionRelationManager;
 
 class RoleResource extends Resource
 {
     use HasRoleColumns;
     use HasRoleInputs;
+    protected static ?string $slug = 'roles';
 
-    // protected static ?string $model          = \Silber\Bouncer\Database\Role::class;
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
-    // public function __construct()
-    // {
-    //     static::$model = static::filamentAuth()->getRoleClass();
-    // }
+    
 
     public static function getModel() : string
     {
@@ -37,17 +34,17 @@ class RoleResource extends Resource
 
     public static function getLabel() : string
     {
-        return (string) (\__('filament-auth::filament-auth.section.role'));
+        return (string) (__('filament-auth::filament-auth.section.role'));
     }
 
     protected static function getNavigationGroup() : ?string
     {
-        return (string) (\__('filament-auth::filament-auth.section.group'));
+        return (string) (__('filament-auth::filament-auth.section.group'));
     }
 
     public static function getPluralLabel() : string
     {
-        return (string) (\__('filament-auth::filament-auth.section.roles'));
+        return (string) (__('filament-auth::filament-auth.section.roles'));
     }
 
     public static function form(Form $form) : Form
